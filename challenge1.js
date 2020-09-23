@@ -10,7 +10,7 @@
 */
 
 var scores, roundScore, activePlayer, dice, gamePlaying, prevRollNum, newScore;
-var sixCounter;
+var sixCounter, sixCounterSD;
 init();
 
 //Rolling the dice
@@ -22,12 +22,19 @@ document.querySelector(".btn-roll").addEventListener("click", function () {
 
     // Save previous dice number
     prevRollNum = dice;
+    prevRollNum2 = secondDice;
 
-    //Verifies if
+    //Verifies if dice hit 6 twice in a row
     if (prevRollNum === 6) {
       sixCounter++;
-    } else {
+    } else if (prevRollNum2 === 6) {
+      sixCounterSD++;
+      if (sixCounterSD === 2) {
+        alert('Second dice hits 6 twice in a row');
+      }
+    } else{
       sixCounter = 0;
+      sixCounterSD = 0;
     }
 
     //2. Display the result
@@ -35,20 +42,18 @@ document.querySelector(".btn-roll").addEventListener("click", function () {
     updateDice(secondDice, "dice-2", "block");
 
     //3. Update the round score IF the rolled number was NOT a 1
-    if (dice !== 1 && secondDice !== 1 && sixCounter !== 2) {
+    if (dice !== 1 && secondDice !== 1 && sixCounter !== 2 && sixCounterSD != 2) {
       //Add score
       var dices = dice + secondDice;
       roundScore += dices;
       document.querySelector(
         "#current-" + activePlayer
       ).textContent = roundScore;
-    } else if (sixCounter === 2) {
+    } else if (sixCounter === 2 || sixCounterSD === 2) {
       //Resetting current score of current Player
       resetCurrentPlayer();
       //Next Player
       nextPlayer();
-    } else if (dice == 1 || secondDice == 1) {
-      resetCurrentPlayer();
     } else {
       nextPlayer();
     }
