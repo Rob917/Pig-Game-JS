@@ -29,9 +29,6 @@ document.querySelector(".btn-roll").addEventListener("click", function () {
       sixCounter++;
     } else if (prevRollNum2 === 6) {
       sixCounterSD++;
-      if (sixCounterSD === 2) {
-        alert('Second dice hits 6 twice in a row');
-      }
     } else{
       sixCounter = 0;
       sixCounterSD = 0;
